@@ -17,8 +17,8 @@ module.exports = function(config) {
     files: [
       'src/*.js',
       'test/*.js',
-      // 'src/**/*.js',
-      // 'test/**/*.js'
+      'src/**/*.js',
+      'test/**/*.js'
     ],
 
 
@@ -39,6 +39,10 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'coverage'],
 
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
 
     // web server port
     port: 9876,
@@ -73,7 +77,8 @@ module.exports = function(config) {
     plugins : [
       'karma-mocha',
       'karma-chai',
-      'karma-phantomjs-launcher'
+      'karma-phantomjs-launcher',
+      'karma-coverage'
     ]
   })
 }
