@@ -15,10 +15,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/*.js',
+      // 'src/*.js',
       'test/*.js',
-      'src/**/*.js',
-      'test/**/*.js'
+      // 'src/**/*.js',
+      // 'test/**/*.js'
     ],
 
 
@@ -30,7 +30,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src/**/*.js': 'coverage'
+      // 'src/**/*.js': ['coverage'],
+      'test/*.js': ['webpack']
     },
 
 
@@ -43,6 +44,22 @@ module.exports = function(config) {
       type : 'html',
       dir : 'coverage/'
     },
+
+
+    webpack: {
+      module: {
+        rules: [{
+          test: /\.js$/,
+          exclude: [/node_modules/],
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015'],
+            plugins: ['istanbul']
+          }
+        }]
+      }
+    },
+
 
     // web server port
     port: 9876,
@@ -78,7 +95,13 @@ module.exports = function(config) {
       'karma-mocha',
       'karma-chai',
       'karma-phantomjs-launcher',
-      'karma-coverage'
-    ]
+      'karma-coverage',
+      'karma-webpack'
+    ],
+
+    phantomjsLauncher: {
+      // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
+      exitOnResourceError: true
+    }
   })
 }
